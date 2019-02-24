@@ -126,6 +126,7 @@ void *load_dtbh_block(const char *dtb_path, unsigned pagesize, unsigned *_sz)
     uint32_t version = DTBH_VERSION;
     unsigned blob_sz = 0;
     char fname[PATH_MAX];
+    const unsigned *model;
     const unsigned *prop_chip;
     const unsigned *prop_platform;
     const unsigned *prop_subtype;
@@ -161,6 +162,17 @@ void *load_dtbh_block(const char *dtb_path, unsigned pagesize, unsigned *_sz)
         }
 
         offset = fdt_path_offset(dtb, "/");
+
+#ifdef DTBH_MODEL
+        model = fdt_getprop(dtb, offset, "model", &len);
+        if (strstr((char *)&model[0], DTBH_MODEL) == NULL) {
+            warnx("model of %s is invalid, skipping (expected *%s* but got %s)",
+                  fname, DTBH_MODEL, (char *)&model[0]);
+            free(dtb);
+            continue;
+        }
+#endif
+
         prop_chip = fdt_getprop(dtb, offset, "model_info-chip", &len);
         if (len % (sizeof(uint32_t)) != 0) {
             warnx("model_info-chip of %s is of invalid size, skipping", fname);
@@ -170,14 +182,16 @@ void *load_dtbh_block(const char *dtb_path, unsigned pagesize, unsigned *_sz)
 
         prop_platform = fdt_getprop(dtb, offset, "model_info-platform", &len);
         if (strcmp((char *)&prop_platform[0], DTBH_PLATFORM)) {
-            warnx("model_info-platform of %s is invalid, skipping", fname);
+            warnx("model_info-platform of %s is invalid, skipping (expected %s but got %s)",
+                  fname, DTBH_PLATFORM, (char *)&prop_platform[0]);
             free(dtb);
             continue;
         }
 
         prop_subtype = fdt_getprop(dtb, offset, "model_info-subtype", &len);
         if (strcmp((char *)&prop_subtype[0], DTBH_SUBTYPE)) {
-            warnx("model_info-subtype of %s is invalid, skipping", fname);
+            warnx("model_info-subtype of %s is invalid, skipping (expected %s but got %s)",
+                  fname, DTBH_SUBTYPE, (char *)&prop_subtype[0]);
             free(dtb);
             continue;
         }
