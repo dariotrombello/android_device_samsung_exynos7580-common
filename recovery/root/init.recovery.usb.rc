@@ -24,6 +24,7 @@ on boot
     write /sys/class/android_usb/android0/iProduct ${ro.product.model}
     write /sys/class/android_usb/android0/iSerial ${ro.serialno}
     write /sys/class/android_usb/f_mass_storage/inquiry_string "Samsung"
+    setprop sys.usb.ffs.aio_compat 1
 
 on fs
     mkdir /dev/usb-ffs 0770 shell shell
@@ -32,6 +33,8 @@ on fs
     write /sys/class/android_usb/android0/f_ffs/aliases adb
     mkdir /dev/bus 0755 root root
     mkdir /dev/bus/usb 0755 root root
+
+    setprop sys.usb.ffs.aio_compat 1
 
 on property:sys.usb.config=adb
     write /sys/class/android_usb/android0/enable 0
@@ -306,3 +309,4 @@ on property:sys.usb.config=midi,adb
      write /sys/class/android_usb/android0/enable 1
      start adbd
      setprop sys.usb.state ${sys.usb.config}
+
