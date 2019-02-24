@@ -23,7 +23,7 @@ TARGET_2ND_CPU_VARIANT := cortex-a53
 # Kernel
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
-TARGET_KERNEL_SOURCE := kernel/samsung/exynos7580-common
+TARGET_KERNEL_SOURCE := kernel/samsung/universal7580
 BOARD_KERNEL_IMAGE_NAME := Image
 
 # Image
