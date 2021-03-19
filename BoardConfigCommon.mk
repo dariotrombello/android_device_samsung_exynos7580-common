@@ -1,3 +1,5 @@
+LOCAL_PATH := device/samsung/exynos7580-common
+
 # Platform
 BOARD_VENDOR := samsung
 TARGET_BOARD_PLATFORM := exynos5
@@ -50,9 +52,9 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 3145728000
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 12096372736
 BOARD_FLASH_BLOCK_SIZE := 131072
 
-TARGET_SPECIFIC_HEADER_PATH += device/samsung/exynos7580-common/include
-TARGET_RECOVERY_FSTAB := device/samsung/exynos7580-common/recovery.fstab
-TARGET_RECOVERY_DEVICE_DIRS += device/samsung/exynos7580-common
+TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
+TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/recovery.fstab
+TARGET_RECOVERY_DEVICE_DIRS := $(LOCAL_PATH)
 
 # TWRP specific build flags
 TW_THEME := portrait_hdpi
