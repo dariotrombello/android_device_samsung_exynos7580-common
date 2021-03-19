@@ -52,7 +52,6 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 
 TARGET_SPECIFIC_HEADER_PATH += device/samsung/exynos7580-common/include
 TARGET_RECOVERY_FSTAB := device/samsung/exynos7580-common/recovery.fstab
-TARGET_SYSTEM_PROP += device/samsung/exynos7580-common/system.prop
 TARGET_RECOVERY_DEVICE_DIRS += device/samsung/exynos7580-common
 
 # TWRP specific build flags
